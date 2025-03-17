@@ -1,0 +1,17 @@
+# path to root directory
+# this requires PROJECT_ROOT environment variable to exist
+# you can replace it with "." if you want the root to be the current working directory
+root_dir: .
+
+# path to data directory
+data_dir: c:\Users\97254\Desktop\Resources\Technion\grad_school\shechtman_lap\ViTSTORM3D\overfit\data\generated_data_example_demo3
+# path to logging directory
+log_dir: ${paths.root_dir}/logs/
+
+# path to output directory, created dynamically by hydra
+# path generation pattern is specified in `configs/hydra/default.yaml`
+# use it to store all files generated during the run, like ckpts and metrics
+output_dir: c:\Users\97254\Desktop\Resources\Technion\grad_school\shechtman_lap\ViTSTORM3D\overfit
+
+# path to working directory
+work_dir: ${hydra:runtime.cwd}

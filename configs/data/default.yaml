@@ -1,0 +1,7 @@
+#_target_: src.data.dense_3d_loc_psf_datamodule.Dense3DLocPSFDataModule 
+data_dir: ${paths.data_dir}
+setup_params_path: ${paths.data_dir}/setup_params.pickle
+labels_path: ${paths.data_dir}/labels.pickle
+batch_size: 16 # Needs to be divisible by the number of devices (e.g., if in a distributed setup)
+num_workers: 4
+pin_memory: False

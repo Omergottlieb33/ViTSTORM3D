@@ -1,0 +1,12 @@
+#_target_: src.models.vit_localization_module.ViTLocalizationLitModule
+
+# optimizer:
+#   _target_: torch.optim.Adam
+#   _partial_: true
+#   lr: 0.001
+#   weight_decay: 0.0
+setup_params_path: ${paths.data_dir}/setup_params.pickle
+lr: 0.001
+T_max: 50
+pretrained: False
+device: cuda:0
