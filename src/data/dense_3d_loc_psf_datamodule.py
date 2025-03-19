@@ -1,10 +1,10 @@
 import pickle
-import pytorch_lightning as pl
+from lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
 from src.utils.data_utils import ImagesDataset
 
-class Dense3DLocPSFDataModule(pl.LightningDataModule):
+class Dense3DLocPSFDataModule(LightningDataModule):
     def __init__(
         self,
         data_dir: str,

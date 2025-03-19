@@ -1,4 +1,4 @@
-from lightning import Callback
+from pytorch_lightning import Callback
 from omegaconf import DictConfig
 from typing import List
 import hydra

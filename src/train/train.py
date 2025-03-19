@@ -1,11 +1,11 @@
-from typing import Any, Dict, List, Optional, Tuple
-
+import os
 import time
 import torch
 import hydra
 import logging
 import pytorch_lightning as pl
-from pytorch_lightning import Trainer, LightningDataModule, LightningModule, Callback
+from typing import List, Optional
+from pytorch_lightning import Trainer, Callback
 from lightning.pytorch.loggers import Logger
 from torch.utils.data import DataLoader
 from omegaconf import DictConfig, OmegaConf
@@ -18,6 +18,8 @@ from src.utils.instantiators import instantiate_callbacks, instantiate_loggers
 
 log = RankedLogger(__name__, rank_zero_only=True)
 
+# Set the environment variable for full Hydra error messages
+os.environ['HYDRA_FULL_ERROR'] = '1'
 
 def train(cfg: DictConfig):
     if cfg.get("seed"):
