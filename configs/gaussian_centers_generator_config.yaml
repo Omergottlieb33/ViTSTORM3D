@@ -1,0 +1,43 @@
+device: 'cuda:0'
+
+imaging:
+  M: 100
+  NA: 1.45
+  n_immersion: 1.518
+
+optics:
+  lamda: 0.67
+  n_sample: 1.33
+  f_4f: 100000.0
+  ps_camera: 11
+  ps_BFP: 30
+  NFP: 1.5
+
+phase_mask:
+  Hmask: 329
+  Wmask: 329
+
+image:
+  H: 121
+  W: 121
+  g_size: 9
+  g_sigma: [0.9, 1.0]
+  bg: 0
+  baseline: [20.0, 40.0]
+  read_std: [8.0, 12.0]
+
+sampling:
+  zrange: [0.0, 4.0]
+  D: 121
+  psf_half_size: 20
+  Nsig_range: [6000, 12000]
+  num_particles_range: [1, 35]
+  blob_r: 2
+  blob_sigma: 0.65
+  blob_maxv: 800
+  us_factor: 1
+
+mask_path: 'c:/Users/97254/Desktop/git/DS3D/real_mask.mat'
+training_data_folder: 'c:\Users\97254\Desktop\Resources\Technion\grad_school\shechtman_lap\ViTSTORM3D\overfit\data\gaussian_centers'
+n_ims: 100
+project_01: False
