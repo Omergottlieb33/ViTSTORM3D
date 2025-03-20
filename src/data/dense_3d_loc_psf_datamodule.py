@@ -2,7 +2,7 @@ import pickle
 from lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
-from src.utils.data_utils import ImagesDataset
+from src.data.datasets import TiffBooleanGridDataset
 
 class Dense3DLocPSFDataModule(LightningDataModule):
     def __init__(
@@ -42,13 +42,13 @@ class Dense3DLocPSFDataModule(LightningDataModule):
         """
         # If we're in the 'fit' stage or setting up for both
         if stage == "fit" or stage is None:
-            self.train_dataset = ImagesDataset(
+            self.train_dataset = TiffBooleanGridDataset(
                 root_dir=self.data_dir,
                 list_IDs=self.partition['train'],
                 labels=self.labels,
                 setup_params=self.setup_params
             )
-            self.val_dataset = ImagesDataset(
+            self.val_dataset = TiffBooleanGridDataset(
                 root_dir=self.data_dir,
                 list_IDs=self.partition['valid'],
                 labels=self.labels,
