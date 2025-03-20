@@ -3,6 +3,7 @@ import pickle
 from lightning import LightningModule
 from transformers import ViTConfig, ViTModel
 from torch import nn
+from torch.nn import functional as F
 from pytorch_lightning.callbacks import ModelCheckpoint
 from torch.optim.lr_scheduler import CosineAnnealingLR
 
@@ -23,35 +24,30 @@ class ViTLocalizationLightningModel(LightningModule):
 
         # Load ViT Tiny from Hugging Face
         if pretrained:
-            self.encoder = ViTModel.from_pretrained('google/vit-tiny-patch16-224-in21k')
+            self.encoder = ViTModel.from_pretrained('google/vit-base-patch16-224-in21k')
         else:
+            # ViT base config for grayscale images
             config = ViTConfig(
-                image_size=224,
-                patch_size=16,
-                num_channels=3,
-                hidden_size=768,
-                num_hidden_layers=12,
-                num_attention_heads=12,
+                image_size=224, # 224 for RGB
+                patch_size=16, # 16 for RGB
+                num_channels=1, # 3 for RGB
+                hidden_size=256, # 16*16*3=768 for RGB
+                num_hidden_layers=4, # 12 for RGB
+                num_attention_heads=4, # 12 for RGB
                 intermediate_size=3072)
             self.encoder = ViTModel(config)
-
-
-        # MLP head
-        vit_output_size = self.encoder.config.hidden_size
-        self.mlp = nn.Sequential(
-            nn.Linear(vit_output_size, 256),
-            nn.ReLU(),
-            nn.Linear(256, self.D),
-            nn.Hardtanh(min_val=0.0, max_val=self.scaling_factor)
-        )
+        #TODO: add XYZ localization head to output the 3D coordinates of the particles [B, N, 3]
 
         self.loss_fn = KDE_loss3D(self.scaling_factor, self._device)
 
     def forward(self, x):
         vit_input = nn.functional.interpolate(x, size=(224, 224), mode='bilinear', align_corners=False)
-        vit_features = self.encoder(vit_input).pooler_output
-        output = self.mlp(vit_features)
-        return output
+        encoder_features = self.encoder(vit_input)
+        last_hidden_state = encoder_features.last_hidden_state # Shape: (batch_size, num_patches + 1, hidden_size)
+        # Remove the class token
+        patch_embeddings = last_hidden_state[:, 1:]
+        out = None #TODO: add XYZ localization head step
+        return out
 
     def training_step(self, batch, batch_idx):
         x, y = batch
