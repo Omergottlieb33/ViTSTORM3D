@@ -5,7 +5,7 @@
 #   _partial_: true
 #   lr: 0.001
 #   weight_decay: 0.0
-setup_params_path: ${paths.data_dir}/setup_params.pickle
+setup_params_path: ${paths.data_dir}/param.pickle
 lr: 0.001
 T_max: 50
 pretrained: False

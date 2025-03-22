@@ -66,10 +66,10 @@ class GaussianCentersDataset(Dataset):
         # select sample
         ID = self.list_IDs[index]
         # load tiff image
-        x_file = os.path.join(self.root_dir, ID)
-        x = io.imread(x_file)
+        tiff_file = os.path.join(self.root_dir, ID)
+        image = imread(tiff_file)
 
-        x = x[np.newaxis, :, :].astype(np.float32)
+        image = image[np.newaxis, :, :].astype(np.float32)
 
         y = np.zeros(self.volume_size)
         y = np.pad(y, self.r)
@@ -79,4 +79,4 @@ class GaussianCentersDataset(Dataset):
             y[zidx:zidx + 2 * self.r + 1, yidx:yidx + 2 * self.r + 1, xidx:xidx + 2 * self.r + 1] += blob3d[i]
         y = (y[self.r:-self.r, self.r:-self.r, self.r:-self.r]).astype(np.float32)
 
-        return x, y
+        return image, y
